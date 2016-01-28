@@ -1,0 +1,78 @@
+*************  PROGRAM CHANGES  --  QUAVER 2.3  *************
+Purpose of changes:
+1.  To eliminate the slight "clock" or "pop" during rests.
+2.  To eliminate unnecessary (redundant) program areas.
+3.  To increase the range of tempos available.
+4.  To smooth the action of the envelope (software ADSR).
+-------------------------------------------------------------
+<<<<<    LISTING CHANGES / ASSEMBLY LANGUAGE LISTING    >>>>>
+-------------------------------------------------------------
+>>>> The lines below are to be DELETED:
+720             ORCC    #$50            * MOVED
+3160            STD     <MOD5+1         * UNNECESSARY
+3170            STD     <MOD6+1         * UNNECESSARY
+3180            STD     <MOD7+1         * UNNECESSARY
+3190            STD     <MOD8+1         * UNNECESSARY
+5960            END                     * MOVED
+>>>> The lines below are to be CHANGED as shown:
+1010            ANDB    #$3F            * LARGER TEMPO RANGE
+1290            ANDB    #$3F
+1570            ANDB    #$3F
+1850            ANDB    #$3F
+4620            FCB     1
+4640            FCB     2
+4660            FCB     3
+4680            FCB     4
+4700            FCB     6
+4720            FCB     8
+4740            FCB     12
+4760            FCB     16
+4780            FCB     24
+4800            FCB     32
+>>>> The lines below are to be ADDED to the listing:
+772             BNE     MODA            * IF NOTE, PLAY
+774             JMP     XNOTE1          * ELSE DELAY
+1052            BNE     MODB            * IF NOTE, PLAY
+1054            JMP     XNOTE2          * ELSE DELAY
+1332            BNE     MODC            * IF NOTE, PLAY
+1334            JMP     XNOTE3          * ELSE DELAY
+1612            BNE     MODD            * IF NOTE, PLAY
+1614            JMP     XNOTE4          * ELSE PLAY
+3455            ORCC    #$50            * MOVED FROM EARLIER
+5951    XNOTE1  JSR     XNOTER          * SILENCE DELAY
+5952            JMP     OUT1            *    TOTAL FOR EACH
+5953    XNOTE2  JSR     XNOTER          *    VOICE IS 37
+5954            JMP     OUT2            *    CLOCK CYCLES,
+5955    XNOTE3  JSR     XNOTER          *    THE SAME AS THE
+5956            JMP     OUT3            *    TIME REQUIRED
+5957    XNOTE4  JSR     XNOTER          *    TO CALCULATE
+5958            JMP     OUT4            *    AND STORE ONE
+5959    XNOTER  EXG     A,B             *    PORTION OF A
+5960            EXG     A,B             *    WAVEFORM FOR
+5961            RTS                     *    PLAYING.
+5962    *
+5963            END                     * MOVED HERE
+-------------------------------------------------------------
+<<<<<          LISTING CHANGES / BASIC LISTING          >>>>>
+-------------------------------------------------------------
+>>>> The following line is to be CHANGED as shown:
+188 CLS:PRINT@V," Enter Tempo Factor (1 to 8)":INPUT
+"         Factor";TT:IFTT<1ORTT>8THEN188ELSETT=ABS(TT-9): TT=TT*16:POKE&H4B9A,TT
+-------------------------------------------------------------
+
+
+
+************************************************************ 
+**********************    QUAVER 2.3   **********************
+*************************************************************
+
+-------------------------------------------------------------
+Changes in use of QUAVER are few; all your previous musical selections will load and run.  Note the following:
+
+1.  Envelopes (software embouchures or ADSRs) should be lengthened to account for their faster cycling rate.  The faster rate permits smoother envelope transitions.
+
+2.  For use of Quaver at HIGH SPEED, do NOT change durations as shown on page ?? of the manual.  The wider range of tempos permits slowing down all music performance as necessary.  However, DO make the change to line 70 to access the higher speed.
+
+3.  For reference, change the listings as shown on the back of this page.
+
+BBP
