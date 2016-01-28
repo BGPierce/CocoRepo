@@ -1,0 +1,1 @@
+* CONTROL/TXT* various control constants needed for assembly* of CM3* (C) 1989 by Lester HandsTAPE SET 1 =0 when a tape versionDEMO SET 1 =0 when a demo versionDEBUG SET 1 =0 when in debug modeSCRNWIDE EQU 32 width of screen in bytes* end of file: CONTROL/TXT
