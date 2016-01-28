@@ -1,0 +1,11 @@
+.asm.obj:
+ avmac09 $< mf(e:mac) pr(e:e) er define(RAW_FLAG,0)
+
+FILES=cmp.obj edit.obj display.obj br.obj block.obj box.obj utility.obj disk.obj midi.obj new.obj ending.obj title.obj
+
+c.bin: $(FILES)
+ avlink @linkfile
+ convmot e:c
+ coco -bp1 E:C.BIN
+
+
