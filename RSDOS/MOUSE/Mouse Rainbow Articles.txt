@@ -1,0 +1,245 @@
+
+*** CoCo Mouse ***
+by Steve Bjork
+1st installment:
+July, 1986 issue of Rainbow magazine
+ 
+ In the past 15 years, I have seen the user interface for compuers improve greatly. First I used punch cards to enter my programs into a computer. Next came the hard copy terminal, but it was like using a typewriter (very slow and noisy). Now finally, the home computer with its display and keyboard makes for faster, quieter and easier user interface.
+
+ True, we have come a long way since the punch card, but the keyboard is not always the best way to talk to a computer. An example is the game MegaBug; you can use the keyboard's arrow keys to control the game, but the joystick makes it easier to play the game. The same is true for most programs written in BASIC. Moving a pointer on the screen to select an option from the menu is more user friendly than looking at the screen, then pressing keys to tell the computer what to do.
+
+ This is where The Mouse comes in. It uses a Color Computer mouse (or joystick) as a point-and-click user interface. By moving the mouse, a pointer (cursor) is moved around on the screen. When the cursor is over the option wanted, press the button on the mouse to select it. No more looking away from the screen to hunt for keys to enter your selection.
+
+ About a year ago I placed in public domain my first version of The Mouse Version 1.0. After receiving many requests for a few options to be added, Version 2.0 of The Mouse is ready for release.
+
+ The Mouse is an assembly language program that displays a moving cursor and prints upper and lowercase text on the Hi-Res graphics screen. This Hi-Res text driver has a format of 32 columns by 24 lines with a scroll-protect window option. Bell and click sounds also have been added to round out the package.
+
+Software Overview
+ The Mouse communicates with a BASIC program via a USR function and the PRINT command. The 60-hertz interrupt is used to draw the cursor on the screen and read the joystick's position and button status. The Mouse can poll the right or left joystick ports, CoCo Max Hi-Res input module, the Radio Shack X-Pad or the Hi-Res Joystick Converter for the cursor position and button status. The PRINT command is redirected from the standard green text screen to a Hi-Res screen text driver whenever the Hi-Res screen is displayed. The USR function has 14 commands that can be passed to it.
+They are:
+
+USR(O) - This command turns off the cursor (pointer) on the screen. Make sure the cursor is off before using any BASIC graphics commands.
+
+USR(l)- This command turns the cursor on. The cursor should only be on when a selection is to be made from the screen.
+
+USR(2) - This function returns the X position of the cursor (and the joystick).
+
+USR(3) - This function returns the Y position of the cursor (and joystick).
+
+(Note: Because the Color Computer joystick port uses a six-bit DAC system, they only return a value of zero to 63. To get full-screen movement of the cursor, the zero to 63 from DAC is multiplied by two for zero to 126 across, or multiplied by three for zero to 189 up and down. The CoCo Max hardware, X-Pad and Hi-Res Joystick Interface options return a full 128 by 192 reading.)
+
+USR( 4) - This function is used to find out if the button has been pressed. A zero is returned if the button has not been pressed since the last time the command was used. A one is returned if it was pressed.
+
+USR(5) - This function returns the up & down status of the button. A zero is passed if the button is not pressed or a one if the button is pressed.
+
+USR(6)- This command is used to unlink (turn off) The Mouse system. This command must be used when ending the BASIC program. When any other command is used, The Mouse is automatically linked into the Color Computer system.
+
+USR(7)-This command plays a bell sound.
+
+USR(8) - This command plays a click sound.
+
+USR(9) - This command selects the right joystick as the input device for cursor movement and button status. This is the standard input device for The Mouse and is automatically selected when The Mouse binary file is loaded into memory.
+
+USR(lO) - This command selects the left joystick for cursor position and button status.
+
+USR(ll) - This command selects the CoCo Max Hi-Res Input Module for cursor position and button status.
+
+USR(12) - This command selects Radio Shack X-Pad for cursor position and button status.
+
+USR(13) - This command selects Hi-Res Joystick Interface for cursor position and button status.
+
+ Tables 1 and 2 are for quick reference of the USR commands and the screen control code for the Hi-Res screen text drivers.
+
+Table 1
+USR commands
+0 Turn off Hi-Res cursor.
+1 Turn on and display Hi-Res cursor.
+2 Get J oystick X position (0 to 127).
+3 Get Joystick Y position (0 to 191 ).
+4 Get button press. If button was pressed, senses the last use of this command and a -1 is returned. Else a 0 is returned.
+5 Get button status. The number -1 is returned if the button is pressed down. Else a 0 is returned.
+6 Disable Mouse software, unlink its hooks.
+7 Play Bell sound.
+8 Play Click sound.
+9 Select right Joystick for input device.
+10 Select left Joystick for input device.
+11 Select Coco Max Hardware for input device.
+12 Select Radio Shack X-Pad for input device.
+13 Select Hi-Res Joystick Interface for input device.
+
+Table 2
+Screen Control Codes
+0 Nil, do nothing.
+1 X-position, Y-position - Set cursor position.
+2 Select white on black characters.
+3 Select black on white characters.
+4 X-position, Y-position, X-length,
+Y-length - Set window position and size.
+5 Move text cursor left
+6 Move text cursor right.
+7 Play bell sound.
+8 Backspace.
+9 Move cursor to next tab position.
+10 Move down one line with scroll (line feed).
+11 Move up one line.
+12 Clear screen and home cursor (form-feed).
+13 Carriage return.
+14 to 3I and I28 to 255 are not defined at this time. 32 to 127 are printable characters.
+
+
+ To make the binary file of The Mouse, type in Listing 1 and save it. Now run the program. If an error is encountered in one of data lines the program prints the line number and stops. After all the data lines have been converted, the program asks if the binary file should be saved to tape or disk.
+
+The disk version of The Mouse binary file has a load address of zero and needs an offset address whenever it is loaded into memory. To load this file in the end of memory of a 16K system, a load offsetaddress $3400 should be used (LOADM "MOUSE", &H3400).
+
+The cassette version has a starting address of $3400 and ending address of $3FFF. If the file is loaded on a 32/64K system, a load offset of $4000 will put it at the top of memory ($7400 to $7FFF).
+
+Using the Mouse Software
+Now that you have an idea of what the commands are, let's see how to use them. Lines (Listing 2) is a BASIC program that uses The Mouse to draw lines on the screen by selecting the start and end points. The program also has the option to exit or clear the screen. Line 100 clears space for The Mouse and Line 120 loads it in. Note: this program is configured for loading in The Mouse from disk. If you are using this program on a casette-based system, delete Line 120 and remove the apostrophe (') from Line 140.
+
+ Line 150 defines USR function zero with The Mouse address. The next line tells BASIC to clear and display a 6K HiRes screen.
+
+ To make easy use of the scroll-protect windows, lines 170 through 180 define three types, full screen, top line and draw area. Information for window placement and size is pasted to The Mouse by printing a control code number four and four bytes of data. The format is: 4, X-position, Y-position, Xlength, Y-length. The X-position is any of the first 3I columns (0-30). The Yposition is any of the first 23 lines (0-22). The X-length is from I to 32 (Xposition) in size. The Y-length is from I to 24 (Y-position) in size.
+
+ After using any of the USR functions The Mouse is linked in the PRINT command and the 60-hertz interrupt and that's what the USR ( 0) in Line 190 does. Lines up to 260 print the instructions to the program. Line 270 waits for the user to press the button to continue. The GDSUB in Line 500 clears the work area.
+
+ After turning on the cursor, the computer waits for the user to press the button to place the starting point of the line. This is done in lines 290 through 350. Next comes the end point selection by pressing the button one more time after moving the cursor on the screen (lines 360 to 400).
+
+ The interrupting of the cursor points on the screen is done by the subroutine at lines 410 to 490. If the cursor point selected (by pressing the button) is on the work area, then the X and Y location is returned. If the Clear option is selected, the screen is erased to black. If the Exit option is selected, the program unlinks The Mouse from thesystem and ends the program in lines 520 through 530.
+
+ Whenever the screen is changed by drawing a line, clearing the screen or placing a dot, the cursor must be turned off and then turned back on after all changes are made. The reason for this is the cursor makes a copy of the area underneath before drawing on the screen. When it is turned off or moved, the old area is restored . The Lines program is good for demonstrating The Mouse, but not much else.
+
+ Now let's look at real application of the point-and-pick user interface, the Disk Drive Timer. This program (Listing 3) makes extensive use of The Mouse and icons.
+
+ After running the programs, you see four disks on the screen . Each disk represents disk Drive 0 to 3. To test the speed of a disk drive, first select the disk icon representing the drive by moving the cursor (arrow) over the disk and pressing the button. The computer tests to see if the disk drive is online with a disk in it. If there is no error, then that disk drive's icon is inverted to show it is the selected drive.
+
+ At the bottom of the screen is the command menu with three options. First is the Disk Speed History. This command builds a bar graph of the drive's speed over a long period of time. Press the button to exit this command.
+
+ Next is the Adjust Speed command. This command displays in real time the speed of the drive. Again, press the button to exit this command.
+
+ The last is the Exit command. This unlinks The Mouse and exits the program.
+
+ Now that you understand how to use The Mouse, let's see what you can write! Send those programs (along with documentation) to THE RAINBOW or upload them to RAINBOW'S CoCo SIG on Delphi.
+
+ So much for this month, next time we'll look at how The Mouse works by taking a peek at its assembly language source code.
+
+2nd installment
+August 1986 issue of Rainbow magazine
+
+What's Inside a Mouse!
+ To refresh your memory, The Mouse is an assembly language program that displays and moves a cursor and prints upper and lowercase text on the Hi-Res graphics screen. A BASIC program may access this interface by 13 user functions and the PRINT command.
+
+ This month we are going to dive into the assembly language source code and see just how The Mouse does its magic.
+
+ Because The Mouse is about 35K bytes long, it is broken down into six files. We will talk about three of them this month. We will see the assembly language side of the USR function and PRINT command along with the code for drawing the cursor (pointer). Also, we will look at how the joystick and button information is polled.
+
+ Before getting started I should remind you that The Mouse and its source code are copyrighted (1986) by SRB Software with all rights reserved. It is presented in RAINBOW magazine for private use only and cannot be used (all or part) in any marketed product without written consent from SRB Software.
+
+A Few Points about Relative Code
+ The Mouse is a code-relative program just like OS-9. The only difference is there is no direct page for the program (the direct page is already used by BASIC's system variables). The standard for address relative variables is LDA YJOY,PCR.
+
+ This instruction (when using a 16-bit offset) is about four bytes and nine clock cycles long, a little on the big and slow side. If The Mouse was a small program with just a few variables, this would not be much of a problem. But the program is about 3K in size and contains 26 variables, which could waste about 200 or so bytes and make it run a little slower.
+
+ If a 16-bit register was set up to point to where the variables are at run time, then a smaller and faster instruction could be used. In The Mouse the U register (User stack pointer, but not used by BASIC as such) is pointed to the variable block. The previous example could be changed to LDA YJOY,U.
+
+ True, it does not look that different but it is only about 2 bytes and 5 clock cycles long (about half the time and size). In The Mouse two types of offsets are used, 5-bit and 8-bit. The 5-bit offset has an advantage over the 8-bit by being one byte shorter and one clock cycle faster. But there is one problem with the 5-bit offset, its limited range of -16 to +15 from where the pointer is addressing. Any offset out of this range must use an 8-bit offset, which is longer and slower. For this reason the most used variables are placed at the start of the variable table.
+
+ If the U register was just a pointer to the start of the variables list, only the first 16 bytes (offset 0 to 15) would use the 5-bit offset and all other variables would use the longer 8-bit offset. One trick to use the full range of the 5-bit offset ( -16 to 15) is to set the U register l6 bytes in the variable list. The value of the first variable is now -16 (previously zero), still in the 5-bit range. But now 16 more bytes (and a few more variables) can use the faster 5-bit offset.
+
+ Let's see how the first file (Mouse 1 - Listing 1) breaks down. The first 13 ines are the standard comments and copyrights. SSTART and SEND are constants for BASIC's screen pointer variables in direct page. SSTART holds the starting address of Hi-Res screen memory and SEND holds the ending address plus one.
+
+ The first instruction is a long branch over the program variable tables, data buffers and command offset vectors to the USR handling code. The next 386 bytes is the shape data for the Hi-Res cursor. By loading data over this space, a new cursor shape can be displayed.
+
+ COMTAB is a table vector offset for the 13 user functions. Each 16-bit entry in the table is an offset (how far way) from the start of the table to the address of the function.
+
+ Next is the variable list used by the program. The Data label is set up 16 bytes into the list for maximum use of the 5-bit offset.
+
+ CURBUF is the buffer for saving what's on the screen before the cursor is placed. The cursor is removed by copying the old screen data from this buffer to the screen's memory. COMBUF is used as BASIC's command vector to intercept the '@' function in the PRINT command.
+
+ So much for the variables and buffers, now for code. First is the USR function and commands. The routine first checks to see if The Mouse is linked into BASIC's system. If needed, it hooks into the 60-hertz interrupt, output port and the PRINT command.
+
+ Down at the label USRl (Line 13900) the program tests for a string variable and aborts if it is. After getting the function number, the program jumps to a subroutine based on it. When the program returns, the number is passed to BASIC and ends the USR function. The subroutines for USR functions two to four are in lines 15800to 17100.
+
+ TURNON (Listing 2) is used to perform function 1, turn on the Hi-Res cursor. This subroutine sets the cursor enable bit of the cursor-status flag byte and draws the cursor on the screen.
+
+ CURON is the code that does the drawing. After checking if it's OK to draw, it finds the screen's memory location for the cursor and determines if it should use the clip draw. A clip drawer only draws the part of the cursor that is on the screen. A clipper could be used even when it is not needed, but it is very slow, about seven times slower than the cursor draw without clipping. Because of this there are two types of cursor drawing, fast and clipped.
+
+ The cursor is put down byte by byte rather than dot by dot to speed up the drawing. If only one image of the cursor was used, there would be only 32 positions across the screen. But the shape data has a four-image offset (0, 1 ,2,3) to give 128 positions. Of course, there are 192 positions up and down.
+
+ TURN OF (Line 28300) is the turn off cursor function (zero). This subroutine resets the cursor-enable bit and turns off the cursor.
+
+ CUROFF is used to remove the cursor if it is on the screen. The cursor is removed by getting the old screen data from CURBUF and putting it on the screen. As with the cursor draw there are two types of removes, fast and clipped.
+
+ DSABLE is the subroutine for function number six, disable (or unlink) The Mouse. After turning off the cursor, the old interrupt, output and command vector are restored.
+
+ SELJOY is for functions nine to 13, select joystick type.
+
+ BASIC's 60-hertz interrupt vector is passed through IRQ to move the cursor, poll the joystick and button status. First the status cursor and HOLD flag are tested along with the joystick position to see if it has moved. If the cursor should be removed, then CUROFF is called. Next, if the cursor should be turned on (because of a new position or hold is no longer on), then CURON is called.
+
+ Lines 37800 to 38100 call BASIC's old interrupt subroutine. The disk drive MOTOROFF and TIMER function will still work. Before end, the interrupt subroutine, the joystick and button status are polled.
+
+ At the end of Listing 1 are three +GET instructions that include the other files needed to assemble the program. This +GET of my assembler is very similar to the USE directive of the OS-9 assembler.
+
+ The FCC in lines 40900 to 41300 add the copyright text to the end of The Mouse program. ENDPRG is the length of the program.
+
+Mouse 2 (Listing 3) is the joystick drivers used by The Mouse. The table of offsets called JOYTAB, is used by JOYSTK to call the right subroutine. Each polling subroutine updates the button up/down status flag (BUTDWN) and returns the Y-position (zero to 191) in the A register and the X position (zero to 127) in the B register.
+
+Next month we will look at The Mouse source code for the Hi-Res screen text driver in files four, five and SIX.
+
+3rd Installment
+September 1986 Rainbow magazine
+
+ To refresh your memory, The Mouse is an assembly language program that displays and moves a cursor and prints upper and lowercase text on the Hi-Res graphics screen. A BASIC program may access this interface by 13 user functions and the PRINT command.
+
+ Last month we covered the assembly language side of the USR function and PRINT command, along with the code for drawing the cursor (pointer). We also looked at how the joystick and button information is polled.
+
+ This month we have the second half of the source code, bell and clock sounds and the Hi-Res screen text driver and its character shape data.
+
+ Before getting started I want to remind you that The Mouse and its source code are copyright 1986 by SRB Software with all rights reserved. It is presented in RAINBOW magazine for private use only, and can't be used (all or part) in any marketed product without written consent from SRB Software.
+
+Makin' Some Noise!
+ The first subroutine of Listing 1 (MOUSE3 / ASM) generates the bell sound used in function 7. The bell sound is generated by playing a steady tone that decreases in volume as it is played (see Figure 1 ).
+
+ So the sound can be heard, the bell routine first enables sound to the TV and selects the six-bit DAC as the sound device by calling SNDON. Next, the interrupts are disabled so the timing loops are not distorted and the starting volume is selected.
+
+ Lines 600 to 1900 generate the envelope in Figure I. After bell sound is completed, the interrupts are turned back on and the TV sound is disabled.
+
+ The click sound does not change in volume like the bell, but does become lower in pitch as it is played. With click being so fast, the interrupts do not need to be turned off as before. Lines 4600 through 5400 flip the bits of the six-bit DAC with a longer delay each time to generate its wave form.
+
+PRINT@
+ The Hi-Res screen text driver has 32 characters per line, just like the standard green text screen. But eight lines must be added to make a total of 24 and give an extra 256 positions. This does present a little problem; the PRINT command's '@' can't address these new lines. So The Mouse intercepts the PRINT command to handle the '@' function for screen location in NPRINT, lines 6300 to 9400 of Listing 1.
+
+ NPRINT jumps to the old PRINT command vector (in DLDPRT) if there is no'@' after the word PRINT. If there is an '@', a 16-bit number subroutine of Color BASIC ROM is called to find the new location. If this number is larger then the window size, then an FC Error is generated. With everything OK, the cursor is moved to the new location and the old PRINT command handles the rest of the line.
+
+Outgoing Intercepters
+ All characters that would normally go to the text screen are intercepted by The Mouse. This is done by redirecting the standard output path through SPRINT at Line 10500. This routine calls CHR (Hi-Res text driver) if a HiRes graphics screen is selected. If a LoRes graphics or text screen is displayed at the time, then the old standard output path is used.
+
+ The routine that prints a character to the Hi-Res screen, CHR, must first decide what mode it is in. These modes are Standard, Set Cursor Position and Set Window. Standard prints the character, does a control code or sets up the other two modes. Set Cursor Position mode takes the next two characters (X and Y position) and moves the cursor (lines 13600 through 151 00). The Set Window mode takes the next four characters and sets up a new scroll protected window (lines 10400 through 15400 of Listing 2).
+
+ Standard mode first tests if the character is a control code, 0 to 13, with CHRTAB holding the offset vector for these routines. Some of the routines are Line Feed, Clear Screen, Carriage Return, Set Window and Set Cursor Position.
+
+ Next is a test for displayable range (32 to 127). If it is in range, then the character's shape is selected out of CHRDAT shape data. The Shape Data format is one byte (eight dots) wide and eight bytes (lines) high.
+
+MOUSE4/ ASM (Listing 2) is the CHRDAT shape data table for all 96 displayable characters. Each character shape consists of one byte (eight dots) wide by eight bytes (scan lines) high. If the bit is a zero, then a black dot is placed on the screen. And of course, if the bit b a one, then a white dot is displayed. Dot format for the letter "S" is shown in Figure 2.
+
+Pattern	Binary	Hex Decimal
+
+...***..	00011100	$1C 28
+..*...*.	00100010	$22 34
+..*.....	00100000	$20 32
+...***..	00011100	$1C 28
+......*.	00000010	$02 2
+..*...*.	00100010	$22 34
+...***..	00011100	$1C 28
+........	00000000	$00 0
+Figure 2: Dot Format for'S'
+
+ Each line of the CHRDAT shape data table has eight bytes (four word length) per line. Some assemblers do not allow for more then one expression per line. If this is the case with your assembler then all 96 FCB lines must be replaced by four FCB lines with one expression each.
+
+That's all the source code. If you have any questions about The Mouse or its source code just drop me a line, or better yet, look for me (6809er) at RAINBOW's Color Computer SIG on Delphi.
+
+(You may contact the author about any questions at
+2529 Ellington Court,
+Simi Valley, CA 93063,
+phone 805-583-5166.
+Please enclose an SASE when writing.)
+
