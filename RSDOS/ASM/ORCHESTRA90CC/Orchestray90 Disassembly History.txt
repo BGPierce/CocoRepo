@@ -1,0 +1,60 @@
+
+ I can truthfully say that I have been using Orchestra90 for
+as long as I have been using computers. In fact, I bought my
+first Orchestra90 pak at the same  time as I bought my first
+16k Tandy Color Computer 2 w/COLOR BASIC. If I remember right,
+I paid $69 for the Color Computer 2, and $79 for the Orch90
+pak. The reason I bought the Coco was that it was on the sale
+display table with an Orch90 pak inserted and playing the 
+"William Tell Overture" through one of the Radio Shack stereo
+systems. Being a musician, I was interested in the Orch90 as
+a song writing tool, so I bought both.
+
+As I learned to use my Coco and eventually working with ML
+and EDTASM, I soon realized that I wanted to disassemble the
+Orch90 ROM and use the code as a base for writing my own music
+software. I made several attempts at this until I eventually
+discovered MIDI and moved into the MIDI world, leaving the
+Orch90 behind. Through the years, I discovered all the great
+wavetable music software written for the Coco and always ended
+up 'hacking' the software so that it would play through the 
+Orch90's 8-bit stereo DACs instead of the Coco's onboard 8-bit
+DAC. I even wrote several 'samplers' that would play my own
+recorded samples back through the Orch90's DACs. I even wrote
+a "Sample Database" program to use with my "Casio SK-1" that
+could record and store 4 short samples onboard. My program
+could either resample from the keyboard, or record it's own
+sample through the joyport. I could have 2 samples in memory
+with a cassette database of samples. The Orch90 was plugged
+into the SK-1's mic input, so I could transfer the samples
+from the Coco to the SK-1. I even used this software in showa
+with my band to use for sound effects in songs. I tried all
+the other music software for the Coco, but all the other
+wavetable software only used 4 (or less) voices and never
+sounded as good as things I did on the Orch90.
+
+Fast forward to 2012, I was working on a "multi-format" music
+player for NitrOS9 and after implementing several 'formats',
+like "Lyra", ".mid", "Ultimuse3", and "Musica II", I decided
+I would love to be able to add an Orch90 song player to my
+arsenal of music players. Once again I delved into the
+disassembly of the Orchestra90's ROM in hopes of creating a
+simple cmd line Orch90 player for NitrOS9. I had most of the
+ROM disassembled, but hadn't figured out very much of what the
+code was doing. I eventually moved on to other projects, but
+writing an Orch90 player was still on my Coco bucket list.
+
+Early last year (2015), one of the guys from the Dragon forum
+had seen one of my posts on the Coco mail list about
+disassembling the Orch90 code and emailed me and asked if I'd
+like to help them with their own disassembly of the code. So
+after several exchanges of code, ideas, and changes, we ended
+up with a compilable source. I have since worked on commenting
+as much of the code as I could.
+
+As it stands now, the Orchestra90 source will compile into an
+exact duplicate of the original Orch90 ROM. I still have a few
+direct page variables to figure out as well as to comment a
+few sections a little better. Figuring out those last few
+variables will help to determine what the uncommented sections
+are doing and making them easier to comment. 

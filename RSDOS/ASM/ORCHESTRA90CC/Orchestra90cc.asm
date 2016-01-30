@@ -1,6 +1,48 @@
-; Disassembly of Orchestra-90CC Cartridge
-; Assembles to exact CRC of the original Orch90 ROM
-; using Roger Taylor's RainbowIDE & CCASM
+; Disassembly of Orchestra-90CC Cartridge ROM
+; Assembles to the exact CRC of the original Orch90 ROM
+; using Roger Taylor's RainbowIDE & his CCASM cross-assembler
+;
+; Orchestra 90 is unique in Color Computer software in that
+; it includes a text editor, scoring (compiling), & playing
+; of 5 voice music, Printer, Cassette, & Disk I/O as well as
+; built in Telecommuitcations software.
+; requiring only 16k and COLOR BASIC, it only uses 5 calls
+; to the COLOR BASIC ROM. These are:
+;
+; [$A002] - CHROUT - Writes a character to a device
+; [$A004] - CSRDON - Turns on the cassette motor
+; [$A006] - BLKIN  - Reads a block from the cassette
+; [$A008] - BLKOUT - Writes a block to the cassette
+; [$A00C] - WRTLDR - Turns motor on and writes a Leader on
+;					 the cassette
+; These calls only appear once each in the Orch90 code.
+; CHROUT is only used for the LIST to printer function. All 
+; other 'screen printing' is done by the Orch90 code.
+; Orch90 does it's own keyboard matrix reads as well as it own
+; Disk I/O. It also has it's own telecommunitcations program
+; built in. All of this, along with song editing, song scoring,
+; and song playing is all contained in one 8k ROM.
+; Considering all of this is done in 8k, and the whole program
+; will run on a 16k COLOR BASIC machine, Orchestra90 is a
+; pretty amazing piece of software.
+;
+; I would like to thank Pere, Tony, and Stewy from the Dragon
+; forums for sending me their efforts in converting the Orch90
+; code to use Dragon disk systems. Combined with my efforts,
+; their sources with comments completed quite a few things I
+; could not have figured out on my own. Anyone interested in
+; their efforts to incorporate the Dragon disk system into
+; Orchestra90 can contact them on the Dragon forum.
+;
+; This disassembly is still a work in progress and I will
+; update it as I get a chance. I still have a few variables to
+; sort out and label as well as quite a bit of commenting
+; to complete.
+; As it stands now, this source will assemble to an exact
+; duplicate of the original Orchestra90 ROM
+;
+; Enjoy!
+; Bill Pierce
 
 SBUFSTRT	EQU	$5E		; Address of the beginning of the song buffer
 DEVNUM		EQU	$6F		; Device number -2 = printer
