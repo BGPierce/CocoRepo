@@ -1,0 +1,1 @@
+/* SCREEN.H Defines width and height of Coco screen used */#define COLS   80        /* No. text columns */#define WID    (8*COLS)  /* Pixels width */#define HGT    192       /* Pixel-lines high */#define HM1    191       /* One less, real common *//* eof screen.h */

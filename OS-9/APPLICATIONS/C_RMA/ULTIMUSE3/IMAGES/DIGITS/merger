@@ -1,0 +1,1 @@
+-xtecho Ignore Error 216del /dd/images/numers.imgdel low.img high.imgecho Now worry about it.merge n0.i n1.i n2.i n3.i n4.i n5.i >low.imgmerge n6.i n7.i n8.i n9.i n16.i >high.imgmerge low.img high.img >/DD/IMAGES/numers.imgecho Done.x-t

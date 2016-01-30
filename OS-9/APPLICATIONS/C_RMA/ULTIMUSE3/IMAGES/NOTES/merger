@@ -1,0 +1,1 @@
+echo Ignore Error 216-xdel /dd/images/notes.imgdel ups.i downs.ixecho Now worrymerge up5.i up1.i up2.i up4.i up8.i up16.i up32.i up64.i >ups.imerge down5.i down1.i down2.i down4.i down8.i down16.i down32.i down64.i >downs.imerge ups.i downs.i >/dd/images/notes.imgecho Done

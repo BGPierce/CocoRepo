@@ -1,0 +1,1 @@
+* New skinny merger 92/2/8 to do 14-wide clef images*  to allow more clefs on menus, like Tenor and Alto-xecho Ignore this error...del /DD/IMAGES/clefs.imgxecho Now worrymerge skintreble.i skinbass.i skinguitar.i skinpedal.i perc.i alto.i tenor.i >/DD/IMAGES/clefs.img

@@ -1,0 +1,1 @@
+/* Keys.H  Key-Sense bit defns, L2 Manual p. 8-120 */#define SHIFT        1#define CTRL         2#define ALT          4#define UPARR        8#define DOWNARR     16#define LEFTARR     32#define RIGHTARR    64#define SPACEBAR   128/* eof Keys.H */

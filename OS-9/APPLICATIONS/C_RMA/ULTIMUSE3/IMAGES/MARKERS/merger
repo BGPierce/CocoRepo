@@ -1,0 +1,1 @@
+-xdel /dd/images/marks.imgxmerge lmark.i rmark.i tmark.i xout.i imark.i >/dd/images/marks.img

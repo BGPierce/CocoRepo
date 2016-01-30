@@ -1,0 +1,1 @@
+echo Ignore Error 216-xdel upsdel downsdel /dd/images/artics.imgxecho Now worrymerge tieup.i legup.i nullup.i marcup.i stuccup.i >upsmerge tiedown.i legdown.i nulldown.i marcdown.i stuccdown.i >downsmerge ups downs >/dd/images/artics.img
