@@ -1,7 +1,7 @@
 # CocoRepo
 A repository for the Tandy Color Computer Sources
 
-Operating systes supported:
+Operating systems supported:
 
   RSDOS
   
@@ -15,6 +15,6 @@ Most OS-9/NitrOS-9 sources use standard OS-9 compilers/assemblers (asm, Basic09,
 
 The ultimate object of this repository (other than historical content) is to hopefully convert these files to a standard Color Computer format, compilable/assembleable on the Color Computer itself.
 
-Most of these files have either been place in the public domain or have been released by the original author.
+Most of these files have either been placed in the public domain or have been released by the original author.
 
 If you find any file or source here that you feel in is in violation of copyright, please contact me immediately and it/they will be removed.
