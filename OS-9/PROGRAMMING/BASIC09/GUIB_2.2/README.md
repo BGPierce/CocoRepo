@@ -4,7 +4,7 @@ Guib 2.2 by Shawn Driscoll
 
 This is the third release of Shawn's Guib series.
 
-Guib is an OS9/Basic09 ustility that allows the Basic09 programmer to creat a "point-n-click" environment for their Basic09 programs.
+Guib is an OS9/Basic09 utility that allows the Basic09 programmer to creat a "point-n-click" environment for their Basic09 programs.
 
 Included is Shawn's "Wave" demo for GUIB 1.1
 
