@@ -1,0 +1,1 @@
+/* JCOLORS.H  Window colors palette-slots for various JukeBox windows */#define MAINBACK    0#define AVAILBACK   2#define SELECTBACK  3#define YESNOBACK   4#define ALERTBACK   5#define CHOICEBACK  6#define TITLEBACK   7/* eof jcolors.h */

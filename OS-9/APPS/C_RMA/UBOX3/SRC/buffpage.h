@@ -1,0 +1,1 @@
+/* BUFFPAGE.H  Buffer sizes, etc. *//* PNEVENTS should be 1020 (KDKA, Pgh!). */#define OVERHEAD    32        /* no. bytes offset of link */#define PAGESIZE    (8192-OVERHEAD)#define PNEVENTS    (PAGESIZE/SEVENT)  /* No. events per page */

@@ -1,0 +1,1 @@
+* echo UBox3Link == build Virtual Memory Ulti-Jukeboxchd RStRLINK -o=UBox3 -M=7 /dd/lib/cstart.r jdp.r jglob.r juke.r jvirt.r jplay.r jplaysubs.r serial.r jinit.r jio.r jsubs.r jmenu.r getclock.r -l=/dd/lib/klib.l-t
