@@ -1,0 +1,1 @@
+CLK = icons.r dclock.r work.rdclock:   $(CLK)          cc -f=dclock $(CLK) -l=/dd/lib/gui.l -l=/dd/lib/cgfx.l -m=8k
