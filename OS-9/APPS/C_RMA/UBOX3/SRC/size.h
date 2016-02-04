@@ -1,0 +1,1 @@
+/* file SIZE.H         Defines No. of Events */#define NEVENTS 32767     /* so Indices don't go Negative *//* eof */
