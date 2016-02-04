@@ -1,0 +1,1 @@
+# MAKEMake by Tim KoonceThis version of make is a direct replacement of the Tandy makeThis version allows more command line parameters as well as fixes several bugs from the original version.Several new 'macros' have been added to allow a more 'user definable' C compiler system.Enjoy!Bill Pierce
