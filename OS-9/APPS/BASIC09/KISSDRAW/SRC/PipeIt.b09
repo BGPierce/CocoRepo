@@ -1,0 +1,43 @@
+PROCEDURE PipeIt
+(* Creates a pipe to send output of KISSDraw to a Tee filter
+
+TYPE rodent=Vld,Act,ToTm:BYTE; X1:INTEGER; TTTo:BYTE; TSSt:INTEGER; CBSA,CBSB,CCtA,CCtB,TTSA,TTSB,TLSA,TLSB:BYTE; X2,BDX,BDY:INTEGER; Stat,Res:BYTE; AcX,AcY,WRX,WRY:INTEGER
+
+TYPE stats=event,InWindow,InToolBox,InMenuBar,line,box,circle,ellipse,bar,arc,fill,text,freehand,RecordOn:BOOLEAN; XXX,YYY:BYTE; ZZZ:STRING[4]; WWW:STRING[40]
+
+TYPE cursor=OutPut,Scale,ScreenType,NoCur,arrow,pencil,cross,hourglass,NoIcon,TextBar,Scross,Icon,IconBuff,pattern,horzline,vertline,slantright,slantleft,dots:BYTE
+
+TYPE packet=mouse:rodent; status:stats; pointer:cursor
+
+TYPE REgisters=CC,A,B,DP:BYTE; X,Y,U:INTEGER
+
+PARAM Pipeline:BYTE
+PARAM StdPath:BYTE
+PARAM Module:STRING[4]
+PARAM Params:STRING[8]
+DIM Regs:REgisters
+DIM Program:STRING[4]
+DIM Parameter:STRING[8]
+DIM SavePath,SysDup,SysFork:BYTE
+
+Program:=Module+CHR$(13)
+Parameter:=Params+CHR$(13)
+SysFork=$03
+SysDup=$82
+CREATE #Pipeline,"/Pipe":UPDATE
+Regs.A:=StdPath
+RUN SysCall(SysDup,Regs)
+SavePath:=Regs.A
+CLOSE #StdPath
+Regs.A:=Pipeline
+RUN SysCall(SysDup,Regs)
+Regs.A=0
+Regs.B=0
+Regs.X:=ADDR(Program)
+Regs.Y=LEN(Parameter)
+Regs.U:=ADDR(Parameter)
+RUN SysCall(SysFork,Regs)
+CLOSE #StdPath
+Regs.A:=SavePath
+RUN SysCall(SysDup,Regs)
+CLOSE #SavePath

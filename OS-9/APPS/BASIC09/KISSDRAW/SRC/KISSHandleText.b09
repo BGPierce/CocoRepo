@@ -1,0 +1,8 @@
+PROCEDURE KISSHandleText(* Procedure to type text at position(* selected with graphics cursorTYPE rodent=Vld,Act,ToTm:BYTE; X1:INTEGER; TTTo:BYTE; TSSt:INTEGER
+; CBSA,CBSB,CCtA,CCtB,TTSA,TTSB,TLSA,TLSB:BYTE; X2,BDX,BDY:INTEGER
+; Stat,Res:BYTE; AcX,AcY,WRX,WRY:INTEGERTYPE stats=IsEvent,InWindow,InToolBox,InMenuBar,line,box,circle,
+ellipse,bar,arc,fill,text,freehand,RecordOn:BOOLEANTYPE cursor=OutPut,Scale,ScreenType,NoCur,arrow,pencil,cross,hourglass
+,NoIcon,TextBar,Scross,Icon,IconBuff,pattern,horzline,vertline,slantright
+,slantleft,dots:BYTETYPE codes=DArc,DBar,DBox,DCircle,DEllipse,DLine,DPoint,DFill,DSetPtr
+,DPutCur,DSetCur,DLogic,DPattern:INTEGERTYPE object=DCode,HorP,VerP:INTEGERTYPE orgin=DPSCode,HanX,HanY:INTEGERTYPE packet=mouse:rodent; status:stats; pointer:cursor; Code:codes
+; Pen:object; Handle:orginPARAM Event:packetDIM CharPosX,CharPosY:INTEGERDIM char:BYTE(* We'll use the veritical bar cursor (* that represents a text insert pointRUN gfx2("GCSet",202,6)REPEAT RUN getKISSmouse(Event)UNTIL Event.mouse.CBSA<>0 AND Event.mouse.AcX>40(* Now we must translate the pixel position(* returned to a character positionCharPosX:=Event.mouse.AcX/8CharPosY:=(Event.mouse.AcY+5)/8(* Now we can position the cursorRUN gfx2("CurXY",CharPosX,CharPosY)(* Make sure Echo is offSHELL "tmode -echo"WHILE char<>13 DO  \REM Carriage ReturnGET #0,charPUT #1,charENDWHILE SHELL "tmode echo"END 

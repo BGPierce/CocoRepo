@@ -1,0 +1,30 @@
+PROCEDURE LoadPix
+(* This procedure will put a picture you have recorded earlier
+(* on your Color Computer III screen.  Eventually, it will also
+(* load the picture into your data structure so you can change it.
+
+TYPE rodent=Vld,Act,ToTm:BYTE; X1:INTEGER; TTTo:BYTE; TSSt:INTEGER; CBSA,CBSB,CCtA,CCtB,TTSA,TTSB,TLSA,TLSB:BYTE; X2,BDX,BDY:INTEGER; Stat,Res:BYTE; AcX,AcY,WRX,WRY:INTEGER
+
+TYPE stats=IsEvent,InWindow,InToolBox,InMenuBar,line,box,circle,ellipse,bar,arc,fill,text,freehand,RecordOn:BOOLEAN
+
+TYPE cursor=OutPut,Scale,ScreenType,NoCur,arrow,pencil,cross,hourglass,NoIcon,TextBar,Scross,Icon,IconBuff,pattern,horzline,vertline,slantright,slantleft,dots:BYTE
+
+TYPE codes=DArc,DBar,DBox,DCircle,DEllipse,DLine,DPoint,DFill,DSetPtr,DPutCur,DSetCur,DLogic,DPattern:INTEGER
+
+TYPE object=DCode,HorP,VerP:INTEGER
+
+TYPE orgin=DPSCode,HanX,HanY:INTEGER
+
+TYPE packet=mouse:rodent; status:stats; pointer:cursor; Code:codes; Pen:object; Handle:orgin
+
+TYPE drawing=loc:orgin; tool:object
+PARAM Event:packet; Picture(20):drawing
+
+DIM PixFile:BYTE
+DIM NumDrawing:INTEGER
+
+OPEN #PixFile,"TestSave":READ
+GET #PixFile,Picture
+PUT #1,Picture
+CLOSE #PixFile
+END 

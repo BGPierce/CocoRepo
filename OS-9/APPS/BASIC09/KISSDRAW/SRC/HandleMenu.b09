@@ -1,0 +1,8 @@
+PROCEDURE HandleMenuTYPE rodent=Vld,Act,ToTm:BYTE; X1:INTEGER; TTTo:BYTE; TSSt:INTEGER
+; CBSA,CBSB,CCtA,CCtB,TTSA,TTSB,TLSA,TLSB:BYTE; X2,BDX,BDY:INTEGER
+; Stat,Res:BYTE; AcX,AcY,WRX,WRY:INTEGERTYPE stats=event,InWindow,InToolBox,InMenuBar,line,box,circle,ellipse
+,bar,arc,fill,text,freehand,patterns,horzlines,vertlines,slantright
+,slantleft,dots:BOOLEANTYPE cursor=NoCur,arrow,pencil,cross,hourglass,NoIcon,TextBar,Scross
+,Icon,IconBuff:BYTETYPE packet=mouse:rodent; status:stats; pointer:cursorPARAM ButtonEvent:packetDIM Menu(2):STRING[14]DIM FileAction:STRING[14]DIM MenuCur,Item:INTEGERDATA "RecordPix","PlaybackPix"FOR Item:=1 TO 2READ Menu(Item)NEXT ItemRUN gfx2("OWSet",1,10,0,16,6,0,2)RUN gfx2("BoldSw","ON")RUN gfx2("CurXY",0,0)PRINT "F I L E     "RUN gfx2("BoldSw","OFF")LOOP (* Exit and close window if Button Down outside of Menu WindowEXITIF ButtonEvent.mouse.Stat=2 AND ButtonEvent.mouse.CBSA<>0 THEN
+RUN gfx2("OWEnd")ENDEXIT (* Exit, close menu window and run File Menu Action requested if(* Mouse is in menu window, button is down and menu item selected(* is valid.EXITIF ButtonEvent.mouse.Stat=0 AND ButtonEvent.mouse.CBSA<>0 AND
+MenuCur>0 AND MenuCur<3 THEN RUN gfx2("OWEnd")FileAction:=TRIM$(Menu(Item))RUN FileAction(ButtonEvent)ENDEXIT RUN getKISSMouse(ButtonEvent)MenuCur:=INT(ButtonEvent.mouse.AcY/8)Item:=MenuCurIF ButtonEvent.mouse.Stat=0 AND MenuCur>0 AND MenuCur<3 THEN RUN gfx2("ReVOn")RUN gfx2("CurXY",1,MenuCur)PRINT Menu(Item)RUN gfx2("ReVOff")RUN gfx2("CurXY",1,MenuCur)PRINT Menu(Item)ENDIF ENDLOOP END 

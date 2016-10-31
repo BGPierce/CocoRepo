@@ -1,0 +1,31 @@
+PROCEDURE SetUpMouse
+(* This procedure uses the program 'SysCall' to
+(* do a set status call which sets up OS-9 to treat
+(* the Color Computer Mouse as a high resolution device
+(* using the right joystick port.  Because, this change is
+(* systemwide, another program using the mouse later would
+(* also need to know how to use the optional high 
+(* resolution mouse adapter.
+
+(* Since this set status call is also used to change the
+(* key repeat start constant and delay speed, it tells
+(* OS-9 to leave those parameters unchanged.
+
+TYPE registers=cc,a,b,dp:BYTE; x,y,u:INTEGER
+
+DIM regs:registers
+DIM callcode:BYTE
+
+(* Now set up the mouse parameters
+
+regs.a:=0
+regs.b:=$94
+regs.x:=$0101
+regs.y:=$FFFF
+callcode:=$8E
+
+RUN syscall(callcode,regs)
+
+END 
+
+

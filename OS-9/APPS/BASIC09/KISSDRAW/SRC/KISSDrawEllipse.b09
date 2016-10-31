@@ -1,0 +1,11 @@
+PROCEDURE KISSDrawEllipse(* Program which allows more natural drawing of ellipseTYPE rodent=Vld,Act,ToTm:BYTE; X1:INTEGER; TTTo:BYTE; TSSt:INTEGER
+; CBSA,CBSB,CCtA,CCtB,TTSA,TTSB,TLSA,TLSB:BYTE; X2,BDX,BDY:INTEGER
+; Stat,Res:BYTE; AcX,AcY,WRX,WRY:INTEGERTYPE stats=IsEvent,InWindow,InToolBox,InMenuBar,line,box,circle,
+ellipse,bar,arc,fill,text,freehand,RecordOn:BOOLEANTYPE cursor=OutPut,Scale,ScreenType,NoCur,arrow,pencil,cross,hourglass
+,NoIcon,TextBar,Scross,Icon,IconBuff,pattern,horzline,vertline,slantright
+,slantleft,dots:BYTETYPE codes=DArc,DBar,DBox,DCircle,DEllipse,DLine,DPoint,DFill,DSetPtr
+,DPutCur,DSetCur,DLogic,DPattern:INTEGERTYPE object=DCode,HorP,VerP:INTEGERTYPE orgin=DPSCode,HanX,HanY:INTEGERTYPE packet=mouse:rodent; status:stats; pointer:cursor; Code:codes
+; Pen:object; Handle:orginPARAM Event:packetDIM StartX,StartY,CurrX,CurrY:INTEGER(* Enable XOR logic, then(* let cursor follow mouse until button is pushedRUN gfx2("Logic","XOR")REPEAT RUN getKISSmouse(Event)UNTIL Event.mouse.CBSA<>0 AND Event.mouse.AcX>40StartX:=Event.mouse.BDXStartY:=Event.mouse.BDYCurrX:=StartXCurrY:=StartYREM Create Handle and set data pointer positionEvent.Handle.HanX:=StartXEvent.Handle.HanY:=StartYPUT #1,Event.HandleWHILE Event.mouse.CBSA<>0 DO RUN getKISSmouse(Event)Event.Pen.DCode:=Event.Code.DEllipseIF CurrX<>Event.mouse.AcX OR CurrY<>Event.mouse.AcY THEN Event.Pen.HorP:=ABS(CurrX-StartX) \Event.Pen.VerP:=ABS(CurrY-StartY
+)PUT #1,Event.PenCurrX:=Event.mouse.AcXCurrY:=Event.mouse.AcYEvent.Pen.HorP:=ABS(CurrX-StartX) \Event.Pen.VerP:=ABS(CurrY-StartY
+)PUT #1,Event.PenENDIF ENDWHILE RUN gfx2("Logic","OFF")Event.Pen.HorP:=ABS(CurrX-StartX) \Event.Pen.VerP:=ABS(CurrY-StartY
+)PUT #1,Event.PenEND 

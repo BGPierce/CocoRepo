@@ -1,0 +1,40 @@
+PROCEDURE KISSfreehand
+(* Program to draw freehand with high resolution mouse
+
+TYPE rodent=Vld,Act,ToTm:BYTE; X1:INTEGER; TTTo:BYTE; TSSt:INTEGER; CBSA,CBSB,CCtA,CCtB,TTSA,TTSB,TLSA,TLSB:BYTE; X2,BDX,BDY:INTEGER; Stat,Res:BYTE; AcX,AcY,WRX,WRY:INTEGER
+
+TYPE stats=IsEvent,InWindow,InToolBox,InMenuBar,line,box,circle,ellipse,bar,arc,fill,text,freehand,RecordOn:BOOLEAN
+
+TYPE cursor=OutPut,Scale,ScreenType,NoCur,arrow,pencil,cross,hourglass,NoIcon,TextBar,Scross,Icon,IconBuff,pattern,horzline,vertline,slantright,slantleft,dots:BYTE
+
+TYPE codes=DArc,DBar,DBox,DCircle,DEllipse,DLine,DPoint,DFill,DSetPtr,DPutCur,DSetCur,DLogic,DPattern:INTEGER
+
+TYPE object=DCode,HorP,VerP:INTEGER
+
+TYPE orgin=DPSCode,HanX,HanY:INTEGER
+
+TYPE packet=mouse:rodent; status:stats; pointer:cursor; Code:codes; Pen:object; Handle:orgin
+
+PARAM Event:packet
+
+DIM StartX,StartY,DLineM:INTEGER
+DLineM:=$1B46
+
+REPEAT 
+RUN getKISSMouse(Event)
+UNTIL Event.mouse.CBSA<>0 AND Event.mouse.AcX>40
+
+Event.Handle.HanX:=Event.mouse.AcX
+Event.Handle.HanY:=Event.mouse.AcY
+PUT #1,Event.Handle
+
+WHILE Event.mouse.CBSA<>0 DO 
+RUN getKISSMouse(Event)
+Event.Pen.DCode:=DLineM
+Event.Pen.HorP:=Event.mouse.AcX \Event.Pen.VerP:=Event.mouse.AcY
+PUT #1,Event.Pen
+ENDWHILE 
+
+END 
+
+

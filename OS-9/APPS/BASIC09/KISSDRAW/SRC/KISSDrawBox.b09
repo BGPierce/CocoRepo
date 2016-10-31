@@ -1,0 +1,7 @@
+PROCEDURE KISSDrawBox(* Program to draw a box at location pointed(* to by high resolution mouse.(* Uses procedure KISSGetMouseTYPE rodent=Vld,Act,ToTm:BYTE; X1:INTEGER; TTTo:BYTE; TSSt:INTEGER
+; CBSA,CBSB,CCtA,CCtB,TTSA,TTSB,TLSA,TLSB:BYTE; X2,BDX,BDY:INTEGER
+; Stat,Res:BYTE; AcX,AcY,WRX,WRY:INTEGERTYPE stats=event,InWindow,InToolBox,InMenuBar,line,box,circle,ellipse
+,bar,arc,fill,text,freehand,patterns,horzlines,vertlines,slantright
+,slantleft,dots:BOOLEANTYPE cursor=NoCur,arrow,pencil,cross,hourglass,NoIcon,TextBar,Scross
+,Icon,IconBuff:BYTETYPE packet=mouse:rodent; status:stats; pointer:cursorPARAM ButtonEvent:packetDIM StartX,StartY,CurrX,CurrY:INTEGER(* Enable XOR logic RUN gfx2("Logic","XOR")REPEAT RUN getKISSmouse(ButtonEvent)UNTIL ButtonEvent.mouse.CBSA<>0 AND ButtonEvent.mouse.AcX>40StartX:=ButtonEvent.mouse.BDXStartY:=ButtonEvent.mouse.BDYCurrX:=ButtonEvent.mouse.AcXCurrY:=ButtonEvent.mouse.BDYRUN gfx2("SetDPtr",ButtonEvent.mouse.BDX,ButtonEvent.mouse.BDY)WHILE ButtonEvent.mouse.CBSA<>0 DO RUN getKISSmouse(ButtonEvent)IF CurrX<>ButtonEvent.mouse.AcX OR CurrY<>ButtonEvent.mouse.AcY THEN
+RUN gfx2("Box",CurrX,CurrY)CurrX:=ButtonEvent.mouse.AcXCurrY:=ButtonEvent.mouse.AcYRUN gfx2("Box",CurrX,CurrY)ENDIF ENDWHILE RUN gfx2("Logic","OFF")RUN gfx2("Box",CurrX,CurrY)END 
