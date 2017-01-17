@@ -1,0 +1,1 @@
+# ArcArc by Carl Kreider (1984)An archival utilityAccepts directories as argumentsCopies files from one to the other if they already existand the from file is newer or if the user gives permission.One of the fastest "disk copy" utilities in OS-9Arc will compile with the standard OS-9 C Compiler by Microwarewith/Carl Kreider's extended "clib.l"
